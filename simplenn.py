@@ -39,4 +39,8 @@ class SimpleNN:
 
     def __init__(self):
         """Initialize network model."""
-        self._layer = []
+        self._layers = []
+
+    def add(self, layer):
+        """Add a layer to the model."""
+        self._layers.append(layer)
