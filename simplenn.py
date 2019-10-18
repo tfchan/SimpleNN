@@ -1,6 +1,5 @@
 """Module of simple neural net."""
 
-
 import numpy as np
 
 
@@ -33,14 +32,14 @@ class Dense:
 
     def init_weight(self):
         """Initialize weight of this layer."""
-        self._weight = np.random.rand(self._units, self._input_shape)
+        self._weight = np.random.rand(self._input_shape, self._units)
 
     def forward(self, x):
         """Compute wx+b, and activate."""
         if self._input_shape is None:
             self._input_shape = x.shape[-1]
             self.init_weight()
-        z = np.dot(self._weight, x) + self._bias
+        z = np.dot(x, self._weight) + self._bias
         z = self._activation(z)
         return z
 
