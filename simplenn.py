@@ -23,7 +23,7 @@ class Layer:
 
     def __init__(self, units, input_shape, activation='linear'):
         """Initialize layer."""
-        self._weight = np.random.rand(input_shape, units)
+        self._weight = np.random.rand(units, input_shape)
         self._bias = np.random.rand(units)
         self._activation = getattr(Activation, activation)
 
