@@ -32,3 +32,11 @@ class Layer:
         z = np.dot(self._weight, x) + self._bias
         z = self._activation(z)
         return z
+
+
+class SimpleNN:
+    """Model of a simple neural network."""
+
+    def __init__(self):
+        """Initialize network model."""
+        self._layer = []
