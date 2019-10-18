@@ -26,3 +26,9 @@ class Layer:
         self._weight = np.random.rand(input_shape, units)
         self._bias = np.random.rand(units)
         self.activation = getattr(Activation, activation)
+
+    def forward(self, x):
+        """Compute wx+b, and activate."""
+        z = np.dot(x, self._weight) + self._bias
+        z = self.activation(z)
+        return z
