@@ -29,6 +29,6 @@ class Layer:
 
     def forward(self, x):
         """Compute wx+b, and activate."""
-        z = np.dot(x, self._weight) + self._bias
+        z = np.dot(self._weight, x) + self._bias
         z = self._activation(z)
         return z
