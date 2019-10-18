@@ -44,3 +44,9 @@ class SimpleNN:
     def add(self, layer):
         """Add a layer to the model."""
         self._layers.append(layer)
+
+    def _feed_forward(self, x):
+        """Feed forward through all layers."""
+        for layer in self._layers:
+            x = layer.forward(x)
+        return x
