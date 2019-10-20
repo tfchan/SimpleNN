@@ -23,6 +23,19 @@ class Activation:
             return x * (1 - x)
 
 
+class LossFunc:
+    """Loss function class."""
+
+    @staticmethod
+    def l2_loss(y_true, y_pred, derivative=False):
+        """Compute L2 loss or its derivative."""
+        if not derivative:
+            result = 0.5 * (y_pred - y_true) ** 2
+        else:
+            result = y_pred - y_true
+        return result if result.ndim == 1 else result.mean(axis=0)
+
+
 class Dense:
     """A Dense layer."""
 
