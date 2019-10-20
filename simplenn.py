@@ -26,14 +26,15 @@ class Activation:
 class Dense:
     """A Dense layer."""
 
-    def __init__(self, units, input_shape=None, activation='linear'):
+    def __init__(self, units, input_shape=None, activation='linear',
+                 use_bias=True):
         """Initialize layer."""
         self._units = units
         self._input_shape = input_shape
         self._weight = None
         if self._input_shape is not None:
             self.init_weight()
-        self._bias = np.random.rand(units)
+        self._bias = np.random.rand(units) if use_bias else np.zeros(units)
         self._activation = getattr(Activation, activation)
 
     def init_weight(self):
