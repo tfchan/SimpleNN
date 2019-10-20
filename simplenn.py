@@ -7,14 +7,20 @@ class Activation:
     """Activation function class."""
 
     @staticmethod
-    def linear(x):
-        """Perform linear activation."""
-        return x
+    def linear(x, deactivate=False):
+        """Perform linear activation or deactivation."""
+        if not deactivate:
+            return x
+        else:
+            return x
 
     @staticmethod
-    def sigmoid(x):
-        """Perform sigmoid activation."""
-        return 1 / (1 + np.exp(-x))
+    def sigmoid(x, deactivate=False):
+        """Perform sigmoid activation or deactivation."""
+        if not deactivate:
+            return 1 / (1 + np.exp(-x))
+        else:
+            return x * (1 - x)
 
 
 class Dense:
