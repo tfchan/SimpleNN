@@ -83,5 +83,5 @@ class SimpleNN:
 
     def _backprop(self, loss):
         """Back propagation through all layers."""
-        for layer in self._layers:
+        for layer in reversed(self._layers):
             loss = layer.backprop(loss)
