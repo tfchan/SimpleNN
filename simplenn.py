@@ -49,6 +49,9 @@ class Dense:
             self.init_weight()
         self._bias = np.random.rand(units) if use_bias else np.zeros(units)
         self._activation = getattr(Activation, activation)
+        self._last_input = None
+        self._last_output = None
+        self._gradient = None
 
     def init_weight(self):
         """Initialize weight of this layer."""
@@ -61,7 +64,17 @@ class Dense:
             self.init_weight()
         z = np.dot(x, self._weight) + self._bias
         z = self._activation(z)
+        self._last_input, self._last_output = x, z
         return z
+
+    def backprop(self, loss):
+        """Compute the gradient of loss w.r.t. weight."""
+        dl_da = loss
+        da_dz = self._activation(self._last_output, deactivate=True)
+        dz_dw = self._last_input
+        dl_dz = dl_da * da_dz
+        self._gradient = dl_dz * dz_dw[:, None]
+        return (dl_dz * self._weight).sum(axis=-1)
 
 
 class SimpleNN:
