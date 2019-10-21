@@ -72,9 +72,9 @@ class Dense:
         dl_da = loss
         da_dz = self._activation(self._last_output, deactivate=True)
         dz_dw = self._last_input
-        dl_dz = dl_da * da_dz
-        self._gradient = dl_dz * dz_dw[:, None]
-        return (dl_dz * self._weight).sum(axis=-1)
+        dl_dz = dl_da * da_dz  # Same shape as output
+        self._gradient = dl_dz * dz_dw[:, None]  # Same shape as weight
+        return (dl_dz * self._weight).sum(axis=-1)  # Same shape as input
 
 
 class SimpleNN:
