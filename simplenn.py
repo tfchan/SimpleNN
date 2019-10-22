@@ -124,3 +124,7 @@ class SimpleNN:
                 self._update(lr)
             loss.append(loss_epoch)
         return np.array(loss)
+
+    def predict(self, x):
+        """Predict input data with the model."""
+        return self._forward(x)
