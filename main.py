@@ -52,8 +52,9 @@ def main():
     model.add(simplenn.Dense(2, activation='sigmoid', use_bias=False))
     model.add(simplenn.Dense(2, activation='sigmoid', use_bias=False))
     model.add(simplenn.Dense(1, activation='sigmoid', use_bias=False))
-    model.fit(x1, y1, lr=1, epochs=5000, early_stopping_loss=0.1)
+    model.fit(x1, y1, lr=0.5, epochs=5000, early_stopping_loss=0.1, verbose=50)
     y1_pred = model.predict(x1)
+    print(y1_pred)
     y1_pred = ((y1_pred > 0.5) * 1).flatten()
     show_result(x1, y1, y1_pred)
 
@@ -63,8 +64,10 @@ def main():
     model.add(simplenn.Dense(3, activation='sigmoid', use_bias=False))
     model.add(simplenn.Dense(3, activation='sigmoid', use_bias=False))
     model.add(simplenn.Dense(1, activation='sigmoid', use_bias=False))
-    model.fit(x2, y2, lr=1, epochs=5000, early_stopping_loss=0.1)
+    model.fit(x2, y2, lr=0.1, epochs=50000, early_stopping_loss=0.1,
+              verbose=100)
     y2_pred = model.predict(x2)
+    print(y2_pred)
     y2_pred = ((y2_pred > 0.5) * 1).flatten()
     show_result(x2, y2, y2_pred)
 
