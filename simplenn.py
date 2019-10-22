@@ -112,7 +112,7 @@ class SimpleNN:
             layer.update_weight(lr)
 
     def fit(self, x, y, lr=0.01, batch_size=None, epochs=1,
-            early_stopping_loss=0):
+            early_stopping_loss=0, verbose=None):
         """Train the model."""
         x = np.atleast_2d(x)
         y = np.atleast_1d(y)
@@ -126,6 +126,8 @@ class SimpleNN:
                 self._backprop(d_loss)
                 self._update(lr)
             loss.append(loss_epoch)
+            if verbose is not None and i % verbose == 0:
+                print(f'Epoch {i}, loss = {loss_epoch}')
             if loss_epoch <= early_stopping_loss:
                 break
         return np.array(loss)
