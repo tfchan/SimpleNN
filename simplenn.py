@@ -12,7 +12,7 @@ class Activation:
         if not deactivate:
             return x
         else:
-            return x
+            return 1
 
     @staticmethod
     def sigmoid(x, deactivate=False):
