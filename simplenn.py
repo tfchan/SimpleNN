@@ -57,6 +57,10 @@ class Dense:
         """Initialize weight of this layer."""
         self._weight = np.random.rand(self._input_shape, self._units)
 
+    def update_weight(self, lr=0.01):
+        """Update the weight base on computed gradient."""
+        self._weight -= lr * self._gradient
+
     def forward(self, x):
         """Compute wx+b, and activate."""
         if self._input_shape is None:
@@ -80,9 +84,10 @@ class Dense:
 class SimpleNN:
     """Model of a simple neural network."""
 
-    def __init__(self):
+    def __init__(self, loss_func='l2_loss'):
         """Initialize network model."""
         self._layers = []
+        self._loss_func = getattr(LossFunc, loss_func)
 
     def add(self, layer):
         """Add a layer to the model."""
@@ -94,7 +99,28 @@ class SimpleNN:
             x = layer.forward(x)
         return x
 
-    def _backprop(self, loss):
+    def _backprop(self, d_loss):
         """Back propagation through all layers."""
         for layer in reversed(self._layers):
-            loss = layer.backprop(loss)
+            d_loss = layer.backprop(d_loss)
+
+    def _update(self, lr):
+        """Update weight of all layers."""
+        for layer in self._layers:
+            layer.update_weight(lr)
+
+    def fit(self, x, y, lr=0.01, batch_size=None, epochs=1):
+        """Train the model."""
+        x = np.atleast_2d(x)
+        y = np.atleast_1d(y)
+        loss = []
+        for i in range(epochs):
+            loss_epoch = 0
+            for x_j, y_j in zip(x, y):
+                pred = self._forward(x_j)
+                loss_epoch += self._loss_func(y_j, pred)
+                d_loss = self._loss_func(y_j, pred, derivative=True)
+                self._backprop(d_loss)
+                self._update(lr)
+            loss.append(loss_epoch)
+        return np.array(loss)
