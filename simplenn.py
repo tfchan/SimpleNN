@@ -111,7 +111,8 @@ class SimpleNN:
         for layer in self._layers:
             layer.update_weight(lr)
 
-    def fit(self, x, y, lr=0.01, batch_size=None, epochs=1):
+    def fit(self, x, y, lr=0.01, batch_size=None, epochs=1,
+            early_stopping_loss=0):
         """Train the model."""
         x = np.atleast_2d(x)
         y = np.atleast_1d(y)
@@ -125,6 +126,8 @@ class SimpleNN:
                 self._backprop(d_loss)
                 self._update(lr)
             loss.append(loss_epoch)
+            if loss_epoch <= early_stopping_loss:
+                break
         return np.array(loss)
 
     def predict(self, x):
