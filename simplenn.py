@@ -29,6 +29,8 @@ class LossFunc:
     @staticmethod
     def l2_loss(y_true, y_pred, derivative=False):
         """Compute L2 loss or its derivative."""
+        y_true = np.atleast_1d(y_true)
+        y_pred = np.atleast_1d(y_pred)
         if not derivative:
             result = 0.5 * (y_pred - y_true) ** 2
         else:
